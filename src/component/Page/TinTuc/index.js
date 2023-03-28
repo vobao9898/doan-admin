@@ -188,7 +188,7 @@ function LoaiSanPham(props) {
                       </td>
                       <td>
                         <img
-                          src={`http://localhost:8080/images/${post.hinh_anh}`}
+                          src={`https://apidoan.herokuapp.com/images/${post.hinh_anh}`}
                           alt=""
                         />
                       </td>

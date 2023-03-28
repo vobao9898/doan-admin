@@ -793,7 +793,7 @@ function Component_type(props) {
             return (
               <div key={l.id} className="select-mausac">
                 <img
-                  src={`http://localhost:8080/images/${l.hinh_anh}`}
+                  src={`https://apidoan.herokuapp.com/images/${l.hinh_anh}`}
                   alt=""
                 />
                 <div className="title-mausacs">{l.ten_mau_sac}</div>
@@ -991,7 +991,7 @@ function Component_type(props) {
                       return (
                         <div key={l.id} className="select-mausac">
                           <img
-                            src={`http://localhost:8080/images/${l.hinh_anh}`}
+                            src={`https://apidoan.herokuapp.com/images/${l.hinh_anh}`}
                             alt=""
                           />
                           <div className="title-mausacs">{l.ten_mau_sac}</div>
@@ -1166,7 +1166,7 @@ function Component_type(props) {
                                         <Carousel.Item key={indexImage}>
                                           <img
                                             className="d-block w-100"
-                                            src={`http://localhost:8080/images/${l}`}
+                                            src={`https://apidoan.herokuapp.com/images/${l}`}
                                             alt=""
                                           />
                                         </Carousel.Item>
@@ -1302,7 +1302,7 @@ function Component_type(props) {
                                         <Carousel.Item key={indexImage}>
                                           <img
                                             className="d-block w-100"
-                                            src={`http://localhost:8080/images/${l}`}
+                                            src={`https://apidoan.herokuapp.com/images/${l}`}
                                             alt=""
                                           />
                                         </Carousel.Item>

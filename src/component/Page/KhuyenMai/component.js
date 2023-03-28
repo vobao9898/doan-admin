@@ -473,7 +473,7 @@ function Component_type(props) {
                     <Carousel.Item key={indexImage}>
                       <img
                         className="d-block w-100"
-                        src={`http://localhost:8080/images/${l}`}
+                        src={`https://apidoan.herokuapp.com/images/${l}`}
                         alt=""
                       />
                     </Carousel.Item>
@@ -481,7 +481,7 @@ function Component_type(props) {
                 })}
               </Carousel>
               // <img
-              // 	src={`http://localhost:8080/images/${data.hinh_anh}`}
+              // 	src={`https://apidoan.herokuapp.com/images/${data.hinh_anh}`}
               // ></img>
             )}
           </div>
