@@ -1,0 +1,16 @@
+.MuiBackdrop-root {
+    min-height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    position: fixed;
+    z-index: 99;
+}
+
+.product-admin {
+    width: calc(100% - 250px);
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    margin-left: 250px;
+}
