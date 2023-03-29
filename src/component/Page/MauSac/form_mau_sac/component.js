@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useform from "./useForm/useForm";
+import useForm from "./useForm/useForm";
 import "./index.scss";
 import validate from "./validateForm/validateForm";
 import * as api from "./../../../../api/mausac";
@@ -22,13 +22,25 @@ function Component_mau_sac(props) {
     errors,
     handleChange,
     onUpload,
-  } = useform(submit, validate, apiUpload);
+  } = useForm(submit, validate, apiUpload);
   const { ten_mau_sac, hinh_anh } = data;
   const { mausacCreator, modalFormCreator, mausacEditting, ListMauSac } = props;
   const [show, setShow] = useState(false);
   const [nd, setNd] = useState("");
 
   const { hideModal } = modalFormCreator;
+
+  useEffect(() => {
+    if (mausacEditting.id) {
+      setData((data) => ({
+        ...data,
+        id: mausacEditting.id,
+        ten_mau_sac: mausacEditting.ten_mau_sac,
+        hinh_anh: mausacEditting.hinh_anh,
+      }));
+    }
+  }, [mausacEditting]);
+
   const handleClose = () => {
     setShow(false);
   };
@@ -38,7 +50,7 @@ function Component_mau_sac(props) {
   }
 
   function submit() {
-    console.log(data)
+    console.log(data);
     const { themMauSacsuccess, updateMauSac } = mausacCreator;
     const dataNew = {
       id: data.id,
@@ -102,16 +114,6 @@ function Component_mau_sac(props) {
     }
   }
 
-  useEffect(() => {
-    if (mausacEditting.id) {
-      setData((data) => ({
-        ...data,
-        id: mausacEditting.id,
-        ten_mau_sac: mausacEditting.ten_mau_sac,
-        hinh_anh: mausacEditting.hinh_anh,
-      }));
-    }
-  }, [mausacEditting]);
 
   return (
     <div className=" tm-edit-product-row">
@@ -150,11 +152,13 @@ function Component_mau_sac(props) {
         </div>
         <div className="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
           <div className="tm-product-img-dummy mx-auto img-mau-sac">
-           
-            {hinh_anh === '' ? (
+            {hinh_anh === "" ? (
               <i className="fas fa-cloud-upload-alt tm-upload-icon "> </i>
             ) : (
-              <img src={`https://apidoan.herokuapp.com/images/${hinh_anh}`} alt=""/>
+              <img
+                src={`https://apidoan.herokuapp.com/images/${hinh_anh}`}
+                alt=""
+              />
             )}
           </div>
           {errors.hinh_anh && <p className="error"> {errors.hinh_anh} </p>}
