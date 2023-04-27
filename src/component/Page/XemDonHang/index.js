@@ -216,7 +216,7 @@ function XemDonHang(props) {
                                     <Carousel.Item key={indexImage}>
                                       <img
                                         className=" w-100"
-                                        src={`https://apidoan.herokuapp.com/images/${l}`}
+                                        src={`http://localhost:8080/images/${l}`}
                                         alt=""
                                       />
                                     </Carousel.Item>

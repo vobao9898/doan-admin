@@ -154,7 +154,7 @@ function MauSac(props) {
                       <td> {post.ten_mau_sac + 1} </td> <td> {post.ten_mau_sac} </td>
                       <td>
                         <img
-                          src={`https://apidoan.herokuapp.com/images/${post.hinh_anh}`}
+                          src={`http://localhost:8080/images/${post.hinh_anh}`}
                         ></img>
                       </td>
                       <td className="Controls_type">

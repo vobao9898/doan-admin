@@ -107,7 +107,7 @@ function Component_type({ loadData = () => {}, dataEdit = {}, ...props }) {
             {!data.hinh_anh ? (
               <i className="fas fa-cloud-upload-alt tm-upload-icon"> </i>
             ) : (
-              <img src={`https://apidoan.herokuapp.com/images/${data.hinh_anh}`} />
+              <img src={`http://localhost:8080/images/${data.hinh_anh}`} />
             )}
           </div>
           {errors.hinh_anh && <p className="error"> {errors.hinh_anh} </p>}
