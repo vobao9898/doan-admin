@@ -237,7 +237,9 @@ function XemDonHang(props) {
                             <p className="card-text">
                               Số lượng: {list.so_luong}
                             </p>
-
+                            <p className="card-text">
+                              Size: {list.ten_size}
+                            </p>
                             <p className="card-text">
                               Tổng tiền: {list.gia_ban * list.so_luong}
                             </p>
