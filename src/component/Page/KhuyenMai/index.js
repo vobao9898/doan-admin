@@ -184,7 +184,7 @@ function KhuyenMai(props) {
                       <td>{`${post.phan_tram}%`}</td>
                       <td> <img
                         className="img"
-                        src={`http://localhost:8080/images/${post.hinh_anh}`}
+                        src={`https://doanapi.herokuapp.com/images/${post.hinh_anh}`}
                       /></td>
                      
                       <td className="Controls_type">

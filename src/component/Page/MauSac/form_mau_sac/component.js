@@ -156,7 +156,7 @@ function Component_mau_sac(props) {
               <i className="fas fa-cloud-upload-alt tm-upload-icon "> </i>
             ) : (
               <img
-                src={`http://localhost:8080/images/${hinh_anh}`}
+                src={`https://doanapi.herokuapp.com/images/${hinh_anh}`}
                 alt=""
               />
             )}

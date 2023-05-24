@@ -42,7 +42,7 @@ import NotFound from "./../component/Page/notFound/index";
 // 	},
 //   ];
 
-export const API_ENPOINT = "http://localhost:8080";
+export const API_ENPOINT = "https://doanapi.herokuapp.com";
 export const ROUTESLG = [
   {
     path: "/dangnhap",

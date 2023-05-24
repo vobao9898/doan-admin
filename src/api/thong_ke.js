@@ -3,7 +3,7 @@ import axios from "axios";
 
 const token = JSON.parse(localStorage.getItem("token"));
 var url_upload = "api/upload";
-var URL = "http://localhost:8080";
+var URL = "https://doanapi.herokuapp.com";
 var url_them_loai_giay = "api/thong_ke";
 // var url_get_loia_giay = ''
 
