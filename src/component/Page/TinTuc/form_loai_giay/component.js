@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import "./component_type.scss";
 import * as apiUpload from "../../../../api/loai_giay";
@@ -131,8 +131,9 @@ function Component_type({ loadData = () => {}, dataEdit = {}, ...props }) {
       setData({ ...dataEdit });
     }
   }, [dataEdit]);
-  console.log(data.noi_dung);
+
   function submit() {
+    console.log(data);
     if (data.id) {
       apiTinTuc
         .updateTinTuc(data)
@@ -232,16 +233,21 @@ function Component_type({ loadData = () => {}, dataEdit = {}, ...props }) {
             <label> Nội dung</label>
             <JoditEditor
               ref={editor}
-              value={noi_dung}
+              // value={noi_dung}
               config={config}
               tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) =>
-                setData((data) => ({
+              // onBlur={(newContent) =>
+              //   setData((data) => ({
+              //     ...data,
+              //     noi_dung: newContent,
+              //   }))
+              // } // preferred to use only this option to update the content for performance reasons
+              onChange={(newContent) => {
+                   setData((data) => ({
                   ...data,
                   noi_dung: newContent,
                 }))
-              } // preferred to use only this option to update the content for performance reasons
-              onChange={(newContent) => {}}
+              }}
             />
             {errors.noi_dung && <p className="error">{errors.noi_dung}</p>}
           </div>
