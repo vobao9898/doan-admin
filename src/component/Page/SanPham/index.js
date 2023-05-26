@@ -536,7 +536,7 @@ function SanPham(props) {
                         {" "}
                         <img
                           className="img"
-                          src={`http://localhost:8080/images/${arr[0]}`}
+                          src={`https://doanapi.herokuapp.com/images/${arr[0]}`}
                         />
                       </td>
                       <td>{`${post.gia_ban
