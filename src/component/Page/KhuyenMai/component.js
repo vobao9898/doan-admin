@@ -13,8 +13,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
 import Carousel from "react-bootstrap/Carousel";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import * as apiUpload from "../../../api/loai_giay";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -197,118 +197,142 @@ function Component_type(props) {
     };
     if (khuyenMaiEditting.id) {
       apiKM
-        .updateKhuyenMai(dataNew)
-        .then((response) => {
-          if (response.status === 200) {
-            updateKhuyenMai(data);
-            if (addCTKM.length > 0) {
-              for (var i = 0; i < addCTKM.length; i++) {
-                const datanews = {
-                  id_khuyen_mai: data.id,
-                  id_giay: addCTKM[i].id,
-                  gia_ban_khuyen_mai:
-                    addCTKM[i].gia_ban -
-                    (addCTKM[i].gia_ban * data.phan_tram) / 100,
-                };
-                apiCTKM
-                  .ThemCTKhuyenMai(datanews)
-                  .then((responseCTKM) => {
-                    if (responseCTKM.status === 200) {
-                      themCTKhuyenMais(datanews);
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            }
-            if (deleteCTKM.length > 0) {
-              for (let i = 0; i < deleteCTKM.length; i++) {
-                const datanews = {
-                  id_khuyen_mai: data.id,
-                  id_giay: deleteCTKM[i].id,
-                };
-                apiCTKM
-                  .deleteCTKhuyenMai(datanews)
-                  .then((responseCTKM) => {
-                    if (responseCTKM.status === 200) {
-                      deleteCTKhuyenMai(
-                        datanews.id_khuyen_mai,
-                        datanews.id_giay
-                      );
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            }
-            notify.notificatonSuccess("Update khuyến mãi thành công");
-            setData((data) => ({
-              ...data,
-              id: 0,
-              ngay_bat_dau: new Date(),
-              ngay_ket_thuc: new Date(),
-              ten_khuyen_mai: "",
-              mo_ta: "",
-              phan_tram: 0,
-              hinh_anh: "",
-              trang_thai: 1,
-              date_create: new Date(),
-              date_update: new Date(),
-            }));
-            hideModal();
-          }
+        .khuyenMaiNow({
+          date_now: to_date,
         })
-        .catch((error) => {
-          console.log(error);
+        .then((res) => {
+          if (res.data.data > 0 && res.data.data[0].id_khuyen_mai !== khuyenMaiEditting.id) {
+            notify.notificatonWarning(
+              "Khoảng thời gian hiện tại đã có chương trình khuyến mãi"
+            );
+          } else {
+            apiKM
+              .updateKhuyenMai(dataNew)
+              .then((response) => {
+                if (response.status === 200) {
+                  updateKhuyenMai(data);
+                  if (addCTKM.length > 0) {
+                    for (var i = 0; i < addCTKM.length; i++) {
+                      const datanews = {
+                        id_khuyen_mai: data.id,
+                        id_giay: addCTKM[i].id,
+                        gia_ban_khuyen_mai:
+                          addCTKM[i].gia_ban -
+                          (addCTKM[i].gia_ban * data.phan_tram) / 100,
+                      };
+                      apiCTKM
+                        .ThemCTKhuyenMai(datanews)
+                        .then((responseCTKM) => {
+                          if (responseCTKM.status === 200) {
+                            themCTKhuyenMais(datanews);
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
+                  }
+                  if (deleteCTKM.length > 0) {
+                    for (let i = 0; i < deleteCTKM.length; i++) {
+                      const datanews = {
+                        id_khuyen_mai: data.id,
+                        id_giay: deleteCTKM[i].id,
+                      };
+                      apiCTKM
+                        .deleteCTKhuyenMai(datanews)
+                        .then((responseCTKM) => {
+                          if (responseCTKM.status === 200) {
+                            deleteCTKhuyenMai(
+                              datanews.id_khuyen_mai,
+                              datanews.id_giay
+                            );
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
+                  }
+                  notify.notificatonSuccess("Update khuyến mãi thành công");
+                  setData((data) => ({
+                    ...data,
+                    id: 0,
+                    ngay_bat_dau: new Date(),
+                    ngay_ket_thuc: new Date(),
+                    ten_khuyen_mai: "",
+                    mo_ta: "",
+                    phan_tram: 0,
+                    hinh_anh: "",
+                    trang_thai: 1,
+                    date_create: new Date(),
+                    date_update: new Date(),
+                  }));
+                  hideModal();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         });
     } else {
       apiKM
-        .ThemKhuyenMai(dataNew)
-        .then((response) => {
-          if (response.status === 200) {
-            themKhuyenMai(response.data.data.insertId, data);
-            notify.notificatonSuccess("Thêm khuyến mãi thành công");
-            if (khuyenmai.length > 0) {
-              for (var i = 0; i < khuyenmai.length; i++) {
-                const datanews = {
-                  id_khuyen_mai: response.data.data.insertId,
-                  id_giay: khuyenmai[i].id,
-                  gia_ban_khuyen_mai:
-                    khuyenmai[i].gia_ban -
-                    (khuyenmai[i].gia_ban * data.phan_tram) / 100,
-                };
-                apiCTKM
-                  .ThemCTKhuyenMai(datanews)
-                  .then((responseCTKM) => {
-                    if (responseCTKM.status === 200) {
-                      themCTKhuyenMais(datanews);
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            }
-            setData((data) => ({
-              ...data,
-              id: 0,
-              ngay_bat_dau: new Date(),
-              ngay_ket_thuc: new Date(),
-              ten_khuyen_mai: "",
-              mo_ta: "",
-              phan_tram: 0,
-              hinh_anh: "",
-              trang_thai: 1,
-              date_create: new Date(),
-              date_update: new Date(),
-            }));
-            hideModal();
-          }
+        .khuyenMaiNow({
+          date_now: to_date,
         })
-        .catch((error) => {
-          console.log(error);
+        .then((res) => {
+          if (res.data.data.length >0) {
+            notify.notificatonWarning(
+              "Khoảng thời gian hiện tại đã có chương trình khuyến mãi"
+            );
+          } else {
+            apiKM
+              .ThemKhuyenMai(dataNew)
+              .then((response) => {
+                if (response.status === 200) {
+                  themKhuyenMai(response.data.data.insertId, data);
+                  notify.notificatonSuccess("Thêm khuyến mãi thành công");
+                  if (khuyenmai.length > 0) {
+                    for (var i = 0; i < khuyenmai.length; i++) {
+                      const datanews = {
+                        id_khuyen_mai: response.data.data.insertId,
+                        id_giay: khuyenmai[i].id,
+                        gia_ban_khuyen_mai:
+                          khuyenmai[i].gia_ban -
+                          (khuyenmai[i].gia_ban * data.phan_tram) / 100,
+                      };
+                      apiCTKM
+                        .ThemCTKhuyenMai(datanews)
+                        .then((responseCTKM) => {
+                          if (responseCTKM.status === 200) {
+                            themCTKhuyenMais(datanews);
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
+                  }
+                  setData((data) => ({
+                    ...data,
+                    id: 0,
+                    ngay_bat_dau: new Date(),
+                    ngay_ket_thuc: new Date(),
+                    ten_khuyen_mai: "",
+                    mo_ta: "",
+                    phan_tram: 0,
+                    hinh_anh: "",
+                    trang_thai: 1,
+                    date_create: new Date(),
+                    date_update: new Date(),
+                  }));
+                  hideModal();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         });
     }
   }
@@ -448,23 +472,18 @@ function Component_type(props) {
         <div className="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
           <div className="title-hinhanh"> Lựa chọn hình ảnh cho màu sắc </div>
           <div className="tm-product-img-dummy">
-            
             {hinh_anh === "" ? (
               <i className="fas fa-cloud-upload-alt tm-upload-icon"> </i>
             ) : (
               <Carousel
                 nextIcon={
                   <span className="glyphicon glyphicon-glass">
-                    <NavigateNextIcon className="iconCoursel">
-                      
-                    </NavigateNextIcon>
+                    <NavigateNextIcon className="iconCoursel"></NavigateNextIcon>
                   </span>
                 }
                 prevIcon={
                   <span className="glyphicon-pre glyphicon-glass">
-                    <NavigateBeforeIcon className="iconCoursel">
-                      
-                    </NavigateBeforeIcon>
+                    <NavigateBeforeIcon className="iconCoursel"></NavigateBeforeIcon>
                   </span>
                 }
               >
@@ -509,7 +528,6 @@ function Component_type(props) {
               Lựa chọn giày cho chương trình khuyến mãi
             </div>
             <div className="content-select-giay">
-              
               {khuyenMaiEditting.id ? (
                 boolThemSP === true ? (
                   <div className="title-select-giay">
@@ -525,7 +543,6 @@ function Component_type(props) {
                         {ListLoaiGiay.map((l, index) => {
                           return (
                             <option key={l.id} value={l.id}>
-                              
                               {l.ten_loai_giay}
                             </option>
                           );
@@ -556,7 +573,6 @@ function Component_type(props) {
                       {ListLoaiGiay.map((l, index) => {
                         return (
                           <option key={l.id} value={l.id}>
-                            
                             {l.ten_loai_giay}
                           </option>
                         );
@@ -566,7 +582,6 @@ function Component_type(props) {
                 </div>
               )}
               <div className="list-giay">
-                
                 {g.length > 0 ? (
                   <div className="khung-select-giay">
                     <div className="title-ct-khuyenmai">
@@ -596,7 +611,6 @@ function Component_type(props) {
               </div>
               {khuyenmai.length > 0 ? (
                 <div className="khung-selected-giay">
-                  
                   {khuyenmai.map((item, index) => {
                     return (
                       <div

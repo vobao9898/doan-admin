@@ -103,19 +103,19 @@ function DonHang(props) {
             });
         } else {
           let pageN = 0;
-          if(props.match.params.page){
+          if (props.match.params.page) {
             let pageNumber = parseInt(props.match.params.page);
             setDataPage({
               offset: pageN,
             });
-  
+
             if (pageNumber === 1) {
               pageN = 0;
             } else {
               pageN = pageNumber * 2 - 2;
             }
           }
-         
+
           api.pageDonHang({ offset: pageN }).then((res) => {
             if (res.status === 200) {
               setData(res.data.data);
@@ -234,7 +234,7 @@ function DonHang(props) {
         </div>
         <div className="list-donhang">
           <div className="listusers">
-            <Table striped bordered hover   className="table_type">
+            <Table striped bordered hover className="table_type">
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -242,6 +242,8 @@ function DonHang(props) {
                   <th scope="col">Số điện thoại</th>
                   <th scope="col">Địa chỉ</th>
                   <th scope="col">Thời gian đặt hàng</th>
+                  <th scope="col">Hình thức thanh toán</th>
+                  <th scope="col">Thanh toán</th>
                   {/* <th scope="col">Tình trạng</th> */}
                 </tr>
               </thead>
@@ -249,7 +251,13 @@ function DonHang(props) {
                 {data.length > 0 ? (
                   data.map((item, index) => {
                     return (
-                      <tr key={item.id}>
+                      <tr
+                        style={{ cursor: "pointer" }}
+                        key={item.id}
+                        onClick={() => {
+                          history.push(`/xemdonhang/id=${item.id}`);
+                        }}
+                      >
                         <td>{item.id}</td>
                         <td>
                           {item.trang_thai !== "HUY" ? (
@@ -270,7 +278,16 @@ function DonHang(props) {
                             .utc()
                             .format("DD-MM-YYYY")}
                         </td>
-
+                        <td>
+                          {item.hinh_thuc_thanh_toan === 0
+                            ? "Thanh toán khi nhận hàng"
+                            : "Thanh toán qua MoMo"}
+                        </td>
+                        <td>
+                          {item.thanh_toan === 0
+                            ? "Chưa thanh toán"
+                            : "Đã thanh toán"}
+                        </td>
                         {/* <td>{item.trang_thai}</td> */}
                       </tr>
                     );
@@ -283,15 +300,19 @@ function DonHang(props) {
           </div>
         </div>
         <div className="pagination">
-         {search === '' ? <Pagination
-            prevPageText="prev"
-            nextPageText="next"
-            activePage={activePage}
-            itemsCountPerPage={6}
-            totalItemsCount={allPage}
-            pageRangeDisplayed={6}
-            onChange={handlePageChange}
-          />:<></>}
+          {search === "" ? (
+            <Pagination
+              prevPageText="prev"
+              nextPageText="next"
+              activePage={activePage}
+              itemsCountPerPage={6}
+              totalItemsCount={allPage}
+              pageRangeDisplayed={6}
+              onChange={handlePageChange}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

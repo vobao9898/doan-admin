@@ -59,3 +59,8 @@ export const updateKhuyenMai = (data) => {
 export const deleteKhuyenMai = (data) => {
     return authAxios.post(`/api/khuyen_mai/delete`, data);
 };
+
+
+export const khuyenMaiNow = (data) => {
+    return authAxios.post(`/api/khuyen_mai/getNow`, data);
+};
