@@ -42,13 +42,26 @@ function XemDonHang(props) {
       })
       .then((response) => {
         if (response.status === 200) {
-          history.push("/donhang");
+          if (status === 3) {
+            api
+              .updateThanhToan({
+                id: parseInt(props.match.params.id),
+                thanh_toan: 1,
+              })
+              .then((response) => {
+                if (response.status === 200) {
+                  history.push("/donhang");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         }
       })
       .catch((error) => {
         console.log(error);
       });
-
     setShow(false);
   }
 
@@ -142,7 +155,7 @@ function XemDonHang(props) {
           </div>
 
           <div className="listusers">
-            <Table striped bordered hover   className="table_type">
+            <Table striped bordered hover className="table_type">
               <tbody>
                 <tr>
                   <td>Người gửi</td>
@@ -160,6 +173,22 @@ function XemDonHang(props) {
                 <tr>
                   <td>Địa chỉ</td>
                   <td colSpan={5}>{data.dia_chi_nguoi_nhan}</td>
+                </tr>
+                <tr>
+                  <td>Hình thức thanh toán</td>
+                  <td colSpan={5}>
+                    {data.hinh_thuc_thanh_toan === 0
+                      ? "Thanh toán khi nhận hàng"
+                      : "Thanh toán qua MoMo"}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Thanh toán</td>
+                  <td colSpan={5}>
+                    {data.thanh_toan === 0
+                      ? "Chưa thanh toán"
+                      : "Đã thanh toán"}
+                  </td>
                 </tr>
                 <tr>
                   <td>Thời gian đặt</td>
@@ -182,8 +211,9 @@ function XemDonHang(props) {
                     >
                       <option value={0}>Đặt hàng</option>
                       <option value={1}>Xác nhận</option>
-                      <option value={2}>Hoàn thành</option>
-                      <option value={3}>Hủy đơn hàng</option>
+                      <option value={2}>Vận chuyển</option>
+                      <option value={3}>Hoàn thành</option>
+                      <option value={4}>Hủy đơn hàng</option>
                     </select>
                   </td>
                 </tr>
@@ -237,9 +267,7 @@ function XemDonHang(props) {
                             <p className="card-text">
                               Số lượng: {list.so_luong}
                             </p>
-                            <p className="card-text">
-                              Size: {list.ten_size}
-                            </p>
+                            <p className="card-text">Size: {list.ten_size}</p>
                             <p className="card-text">
                               Tổng tiền: {list.gia_ban * list.so_luong}
                             </p>

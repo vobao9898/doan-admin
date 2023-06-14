@@ -44,6 +44,11 @@ export const pageDonHang = (data) => {
     return authAxios.post(`/api/dat_hang/page`, data);
 };
 
+export const updateThanhToan = (data) => {
+    return authAxios.post(`/api/dat_hang/updateThanhToan`, data);
+};
+
+
 export const pageSearchDonHang = (data) => {
     return authAxios.post(`/api/dat_hang/pageSearch`, data);
 };
